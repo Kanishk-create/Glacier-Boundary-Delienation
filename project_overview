@@ -1,0 +1,54 @@
+# 🌍 GlacioWatch: An Autonomous, AI-Driven Glacial Monitoring Platform
+
+I’m incredibly excited to share **GlacioWatch**, a full-stack platform I've been building that bridges the gap between remote sensing, machine learning, and modern web engineering. 
+
+The goal of GlacioWatch is simple but critical: to autonomously monitor the health, retreat, and status of 29 major Himalayan glaciers across India in real-time, translating raw satellite data into actionable climate science insights.
+
+Here is a deep dive into the architecture, the technology stack, and how all the moving parts come together.
+
+---
+
+## 🏗️ System Architecture & Tech Stack
+
+GlacioWatch is a decoupled, data-driven application that pipelines raw planetary data into a premium, interactive web dashboard. 
+
+### 1. The Data Pipeline (Python & ML)
+At the heart of the system is an automated Python data pipeline that processes multi-spectral satellite imagery.
+- **Data Ingestion:** Downloads and processes Sentinel-2 satellite imagery focusing on the Karakoram and Himalayan ranges.
+- **Feature Extraction & Dimensionality Reduction:** Computes critical spectral indices (NDSI, NDWI, NDVI) and utilizes **PCA (Principal Component Analysis)** for 3D projections of the spectral data.
+- **Machine Learning Classification:** Employs trained models (Random Forest, Logistic Regression, SVM) to perform multi-class terrain segmentation, classifying pixels into Ice, Bare Rock, Water, and Debris. 
+- **Automated Archiving:** The pipeline calculates the surface area and "retreat status" of each glacier, automatically storing the statistics, trend graphs, and processed satellite images directly into **MongoDB** (utilizing **GridFS** for large image binaries).
+
+### 2. The Backend & Database (MongoDB + Next.js API)
+- **Database:** A local **MongoDB** instance acts as the central nervous system. It maintains collections for `glacier_history`, `glaciers_processed`, and daily `blogs`.
+- **API Layer:** **Next.js 15 App Router** handles the backend API routes (`/api/dashboard`, `/api/map`, `/api/image/[id]`). The API streams live images directly from MongoDB GridFS to the frontend, ensuring the dashboard is always displaying the latest pipeline outputs.
+
+### 3. The Frontend (Next.js + React)
+The UI is designed to feel like a high-tech command center, utilizing a "Neon-Dark" glassmorphism design system.
+- **Framework:** **Next.js** (React) and **Tailwind CSS**.
+- **Animations:** **Framer Motion** is used extensively for fluid, micro-interactions, scroll-reveals, and smooth layout transitions.
+- **Live Spatial Map:** Integrated **React-Leaflet** with CartoDB Dark Matter tiles to render a fully interactive geographical map. It dynamically plots all 29 glaciers based on their live database coordinates, featuring custom glowing neon map markers and interactive glass-panel popups displaying real-time area and AI confidence scores.
+
+### 4. Generative AI Integration (Local LLM)
+Instead of just showing raw data, the platform interprets it.
+- **Local AI:** Integrated **Llama 3.2:1b** running locally via **Ollama**. 
+- **Synthesis:** In the dashboard, users can click "Generate Analysis". The Next.js backend sends the raw daily metrics to the local Llama model, which synthesizes the numbers into a cohesive, human-readable scientific summary of the glacier's current state—all running locally with zero latency or API costs.
+
+---
+
+## 🚀 Key Features
+
+*   **Interactive Monitoring Dashboard:** A left-right split interface where researchers can scroll through daily records, view high-res pipeline images, and trigger AI-driven analysis.
+*   **Live Spatial Map:** An interactive map of the Himalayas that plots real-time data directly from the MongoDB database, showing which glaciers are stable and which are retreating.
+*   **Research Gallery:** A dynamic gallery that parses pipeline CSV outputs to display live machine learning performance metrics (Accuracy, F1 Score, AUC) for transparency.
+*   **Fully Automated:** From satellite data extraction to the final UI render, the entire pipeline is capable of running autonomously.
+
+---
+
+## 💡 What I Learned
+
+Building GlacioWatch forced me to think beyond standard CRUD apps. I had to solve complex challenges like streaming binary image data from GridFS through Next.js API routes, managing state between an automated Python pipeline and a modern React frontend, and implementing local Generative AI to add true value to raw analytics.
+
+If you're interested in climate tech, machine learning, or full-stack engineering, I'd love to hear your thoughts!
+
+#ClimateTech #MachineLearning #Nextjs #React #Python #MongoDB #ArtificialIntelligence #WebDevelopment #Glaciology

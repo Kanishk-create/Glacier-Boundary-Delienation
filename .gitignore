@@ -1,0 +1,89 @@
+# =============================================================================
+# GlacioWatch — .gitignore
+# =============================================================================
+
+# ─── Environment / Secrets (NEVER commit) ────────────────────────────────────
+.env
+**/.env
+.env.local
+**/.env.local
+.env.production
+**/.env.production
+
+# Keep example templates tracked
+!.env.example
+!**/.env.example
+
+# Firebase service account keys
+*firebase-adminsdk*.json
+
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ─── Node.js / Next.js ──────────────────────────────────────────────────────
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+pnpm-lock.yaml
+tsconfig.tsbuildinfo
+
+# ─── Large Data Files (satellite imagery, processed data) ────────────────────
+raw_data/
+**/raw_data/
+processed_data/
+data_prediction/
+data/raw/
+
+# ─── Model Weights (too large for GitHub — use releases/GDrive) ─────────────
+*.pth
+*.pt
+*.h5
+*.onnx
+*.pkl
+*.joblib
+scalable_glacier_mapping-main/weights/
+scalable_glacier_mapping-main/predictions/
+scalable_glacier_mapping-main/logs/
+scalable_glacier_mapping-main/glacier-lake-dataset/
+scalable_glacier_mapping-main/confidence_calibration_models/
+
+# ─── Build Artifacts & Generated Output ──────────────────────────────────────
+logs/
+**/logs/
+output/
+**/output/
+
+# ─── Large Notebook (>40 MB — include the smaller one) ──────────────────────
+lse-st443-ml-project-multiclass-classification.ipynb
+
+# ─── Test/Scratch Images ────────────────────────────────────────────────────
+test_tile_*.png
+tempCodeRunnerFile.py
+
+# ─── IDE & OS ────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Reports (PDFs and DOCX — too large for git, use releases) ──────────────
+*.pdf
+*.docx
+
+# ─── Scratch / Temporary ────────────────────────────────────────────────────
+scratch/
